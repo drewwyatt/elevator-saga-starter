@@ -1,5 +1,10 @@
 {
   "name": "elevator-saga",
   "version": "0.1.0",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@tsconfig/recommended": "^1.0.1",
+    "prettier": "^2.7.1",
+    "typescript": "^4.7.4"
+  }
 }
