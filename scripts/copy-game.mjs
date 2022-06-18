@@ -3,9 +3,8 @@ import { readFileSync } from 'fs'
 import { dirname, join } from 'path'
 import { fileURLToPath } from 'url'
 
-const regex = /^const game = (\{(.|\n)*\})\n\nexport \{ game }$/m
 const __dirname = dirname(fileURLToPath(import.meta.url))
-const filePath = join(__dirname, '../out.js')
+const outDir = (...args) => join(__dirname, '../out/', ...args)
 
 const pbcopy = data => {
   const proc = spawn('pbcopy')
@@ -13,12 +12,15 @@ const pbcopy = data => {
   proc.stdin.end()
 }
 
-console.log('[copy-game] Reading file...')
-const file = readFileSync(filePath, 'utf-8')
+console.log('[copy-game] Reading files...')
+const initFile = readFileSync(outDir('init.js'), 'utf-8')
+const updateFile = readFileSync(outDir('update.js'), 'utf-8')
 
-console.log('[copy-game] Copying game object...')
-const matches = file.match(regex)
-const game = matches[1]
+console.log('[copy-game] Building game object...')
+const game = `{
+  init: (elevators, floors) => {${initFile}},
+  update: (deltaTime, elevators, floors) => {${updateFile}},
+}`
 
-console.log('[copy-game] writing to clipboard...')
+console.log('[copy-game] Writing to clipboard...')
 pbcopy(game)
