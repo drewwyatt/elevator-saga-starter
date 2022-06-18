@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "rollup -w -c rollup.config.js",
     "build": "rollup -c rollup.config.js",
-    "copy": "cat out.js | pbcopy"
+    "copy": "node scripts/copy-game.mjs"
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "^8.3.3",
