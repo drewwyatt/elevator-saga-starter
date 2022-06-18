@@ -86,3 +86,20 @@ export type Elevator = {
    */
   on(event: 'stopped_at_floor', callback: () => void): void
 }
+
+export type Floor = {
+  /**
+   * Gets the floor number of the floor object.
+   */
+  floorNum(): number
+
+  /**
+   * Triggered when someone has pressed the up button at a floor. Note that passengers will press the button again if they fail to enter an elevator.
+   */
+  on(event: 'up_button_pressed', callback: () => void): void
+
+  /**
+   * Triggered when someone has pressed the down button at a floor. Note that passengers will press the button again if they fail to enter an elevator.
+   */
+  on(event: 'down_button_pressed', callback: () => void): void
+}
