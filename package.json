@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "rollup -w -c rollup.config.js",
-    "build": "rollup -c rollup.config.js"
+    "build": "rollup -c rollup.config.js",
+    "copy": "cat out.js | pbcopy"
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "^8.3.3",
