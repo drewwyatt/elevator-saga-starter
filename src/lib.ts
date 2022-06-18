@@ -103,3 +103,27 @@ export type Floor = {
    */
   on(event: 'down_button_pressed', callback: () => void): void
 }
+
+/**
+ * About the game
+ *
+ * This is a game of programming!
+ * Your task is to program the movement of elevators, by writing a program in JavaScript.
+ *
+ * The goal is to transport people in an efficient manner.
+ * Depending on how well you do it, you can progress through the ever more difficult challenges.
+ * Only the very best programs will be able to complete all the challenges.
+ *
+ * Your code must declare an object containing at least two functions called init and update. Like this:
+ *
+ * These functions will then be called by the game during the challenge.
+ * init will be called when the challenge starts, and update repeatedly during the challenge.
+ *
+ * Normally you will put most of your code in the init function, to set up event listeners and logic.
+ *
+ * @link https://play.elevatorsaga.com/documentation.html
+ */
+export type Game = {
+  init(elevators: Elevator[], floors: Floor[]): void
+  update(deltaTime: number, elevators: Elevator[], floors: Floor[]): void
+}
