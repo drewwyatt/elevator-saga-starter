@@ -104,6 +104,13 @@ export type Floor = {
   on(event: 'down_button_pressed', callback: () => void): void
 }
 
+export type InitFunction = (elevators: Elevator[], floors: Floor[]) => void
+export type UpdateFunction = (
+  deltaTime: number,
+  elevators: Elevator[],
+  floors: Floor[],
+) => void
+
 /**
  * About the game
  *
@@ -124,6 +131,6 @@ export type Floor = {
  * @link https://play.elevatorsaga.com/documentation.html
  */
 export type Game = {
-  init(elevators: Elevator[], floors: Floor[]): void
-  update(deltaTime: number, elevators: Elevator[], floors: Floor[]): void
+  init: InitFunction
+  update: UpdateFunction
 }

@@ -3,6 +3,9 @@
   "compilerOptions": {
     "baseUrl": "src",
     "noEmit": true,
-    "lib": ["ESNext", "DOM"]
+    "lib": ["ESNext", "DOM"],
+    "paths": {
+      "lib": ["./lib"]
+    }
   }
 }
