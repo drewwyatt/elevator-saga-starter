@@ -1,28 +1,10 @@
-import { Direction, Elevator, Floor } from 'lib'
-import { handleFloorPressForDirection, toNextDirection } from 'utils'
+import type { Elevator, Floor } from 'lib'
+import { registerButtonPresses, registerIdleBehavior } from 'callbacks'
+import queue from 'queue'
 
 declare const elevators: Elevator[]
 declare const floors: Floor[]
+queue.initialize(floors)
 
-const elevator = elevators[0]
-
-elevator.on('floor_button_pressed', floorNumber => {
-  switch (elevator.destinationDirection()) {
-    case Direction.up:
-      handleFloorPressForDirection(elevator, Direction.up)
-      break
-    case Direction.down:
-      handleFloorPressForDirection(elevator, Direction.down)
-      break
-    case Direction.stopped: {
-      elevator.goToFloor(floorNumber)
-    }
-  }
-})
-
-elevator.on('idle', () => {
-  const direction = toNextDirection(elevator)
-  if (direction === Direction.stopped) return
-
-  handleFloorPressForDirection(elevator, direction)
-})
+registerButtonPresses(queue, floors)
+registerIdleBehavior(queue, elevators)
