@@ -1,10 +1,11 @@
-import { Direction, Floor } from 'lib'
+import { Direction, Elevator, Floor } from 'lib'
 import { assertNotStopped } from 'utils'
 
 type Entry = { direction: Direction; floor: number }
 
 export class Queue {
   private value: Entry[] = []
+  private idleElevators: Elevator[] = []
 
   private _floors: Floor[] | undefined
   private get floors(): Floor[] {
@@ -16,9 +17,20 @@ export class Queue {
     this._floors = floors
   }
 
+  public registerIdle = (elevator: Elevator) => {
+    if (!this.idleElevators.includes(elevator)) {
+      this.idleElevators.push(elevator)
+    }
+  }
+
   public push = (direction: Direction, floor: Floor) => {
     assertNotStopped(direction)
-    this.value.push({ direction, floor: floor.floorNum() })
+    const elevator = this.idleElevators.shift()
+    if (elevator) {
+      elevator.goToFloor(floor.floorNum())
+    } else {
+      this.value.push({ direction, floor: floor.floorNum() })
+    }
   }
 
   public pop = (currentFloor: number): [floors: number[], direction: Direction] => {

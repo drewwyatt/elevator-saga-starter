@@ -13,8 +13,9 @@ export const registerIdleBehavior = (queue: Queue, elevators: Elevator[]) => {
           `[elevator:${idx}] queueing ${floors.length} floors. Going ${direction}.`,
         )
       } else {
-        console.log(`[elevator:${idx}] Queue empty. Stopping.`)
-        // TODO: register with queue??
+        console.log(`[elevator:${idx}] Queue empty. Registering with queue.`)
+        queue.registerIdle(elevator)
+        return
       }
 
       assertNotStopped(direction)
