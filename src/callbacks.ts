@@ -32,9 +32,16 @@ export const registerIdleBehavior = (queue: Queue, elevators: Elevator[]) => {
 
     elevator.on('floor_button_pressed', floor => {
       if (!elevator.destinationQueue.includes(floor)) {
-        // TODO: probably sort the queue here?
-        console.log(`[elevator:${idx}] Adding floor ${floor} to end of queue`)
-        elevator.destinationQueue.push(floor)
+        if (elevator.loadFactor() >= 0.75) {
+          console.log(
+            `[elevator:${idx}] loadFactor is ${elevator.loadFactor()}. Going straight to drop-off`,
+          )
+          elevator.destinationQueue.unshift(floor)
+        } else {
+          // TODO: probably sort the queue here?
+          console.log(`[elevator:${idx}] Adding floor ${floor} to end of queue`)
+          elevator.destinationQueue.push(floor)
+        }
         elevator.checkDestinationQueue()
       }
     })
